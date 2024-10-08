@@ -1,5 +1,7 @@
 import React from "react";
-import { Text, Image, StyleSheet, SafeAreaView, View, FlatList, StatusBar } from "react-native";
+import { Text, Image, StyleSheet, SafeAreaView, View, FlatList, StatusBar, ScrollView } from "react-native";
+
+import styles from "../styles/styles";
 
 const DATA = [
     {
@@ -73,165 +75,112 @@ const Cards = ({descricao}: ItemProps2) => (
 const Home = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <View>
 
-                <View style={styles.header}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 20}}>
-                        <View style={styles.header_img_user_backg}>
-                            <Image
-                                style={styles.header_img_user}
-                                source={require('../imgs/user.png')}
-                            />
+            <ScrollView>
+                <View>
+                    <View style={styles.header}>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between', padding: 20}}>
+                            <View style={styles.header_img_user_backg}>
+                                <Image
+                                    style={styles.header_img_user}
+                                    source={require('../imgs/user.png')}
+                                />
+                            </View>
+                            <View style={{flexDirection: 'row', gap: 15}}>
+                                <Image
+                                    style={styles.header_img_opcoes}
+                                    source={require('../imgs/olho2.png')}
+                                />
+                                <Image
+                                    style={styles.header_img_opcoes}
+                                    source={require('../imgs/interrogacao2.png')}
+                                />
+                                <Image
+                                    style={styles.header_img_opcoes}
+                                    source={require('../imgs/email2.png')}
+                                />
+                            </View>
                         </View>
-                        <View style={{flexDirection: 'row', gap: 15}}>
-                            <Image
-                                style={styles.header_img_opcoes}
-                                source={require('../imgs/olho2.png')}
-                            />
-                            <Image
-                                style={styles.header_img_opcoes}
-                                source={require('../imgs/interrogacao2.png')}
-                            />
-                            <Image
-                                style={styles.header_img_opcoes}
-                                source={require('../imgs/email2.png')}
-                            />
-                        </View>
+                        <Text style={styles.header_nome}>Olá, Pedro</Text>
                     </View>
-                    <Text style={styles.header_nome}>Olá, Pedro</Text>
-                </View>
 
-                <View style={{padding: 20}}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={{fontSize: 24, color: 'black'}}>Conta</Text>
-                        <Image
-                            style={{width: 20, height: 35}}
-                            source={require('../imgs/proximo.png')}
+                    <View style={{padding: 20}}>
+                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Text style={{fontSize: 24, color: 'black'}}>Conta</Text>
+                            <Image
+                                style={styles.seta}
+                                source={require('../imgs/proximo.png')}
+                            />
+                        </View>
+                        <Text style={{fontSize: 28, color: 'black', fontWeight: 'bold'}}>R$ 674,65</Text>
+                    </View>
+
+                    <View>
+                        <FlatList 
+                            data={DATA}
+                            renderItem={({item}) => <Item title={item.title} image={item.image} />}
+                            keyExtractor={item => item.id.toString()}
+                            horizontal={true}   // Rolar na horizontal
+                            showsHorizontalScrollIndicator={false}  // Oculta barra de rolagem
                         />
                     </View>
-                    <Text style={{fontSize: 28, color: 'black', fontWeight: 'bold'}}>R$ 674,65</Text>
-                </View>
 
-                <View /*style={styles.container2}*/>
-                    <FlatList 
-                        data={DATA}
-                        renderItem={({item}) => <Item title={item.title} image={item.image} />}
-                        keyExtractor={item => item.id.toString()}
-                        horizontal={true}   // Rolar na horizontal
-                        showsHorizontalScrollIndicator={false}  // Oculta barra de rolagem
-                    />
-                </View>
+                    <View style={styles.cartoes}>
+                        <Image
+                            style={styles.cartoes_img} 
+                            source={require('../imgs/cartoes.png')}
+                        />
+                        <Text style={styles.cartoes_text}>Meus cartões</Text>
+                    </View>
 
-                <View style={styles.cartoes}>
-                    <Image
-                        style={styles.cartoes_img} 
-                        source={require('../imgs/cartoes.png')}
-                    />
-                    <Text style={styles.cartoes_text}>Meus cartões</Text>
-                </View>
+                    <View>
+                        <FlatList 
+                            data={DATA2}
+                            renderItem={({item}) => <Cards descricao={item.descricao} />}
+                            keyExtractor={item => item.id.toString()}
+                            horizontal={true}
+                            showsHorizontalScrollIndicator={false}
+                        />
+                    </View>
 
-                <View>
-                    <FlatList 
-                        data={DATA2}
-                        renderItem={({item}) => <Cards descricao={item.descricao} />}
-                        keyExtractor={item => item.id.toString()}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    />
-                </View>
+                    <View style={styles.linha}></View>
 
-            </View>
+                    <View style={styles.credito}>
+                        <View style={styles.cartao}>
+                            <Text style={{fontSize: 20, color: 'black', fontWeight: 'bold'}}>Cartão de crédito</Text>
+                            <Image 
+                                style={styles.seta}
+                                source={require('../imgs/proximo.png')}
+                            />
+                        </View>
+                        <View>
+                            <Text style={{fontSize: 16, color: 'black'}}>Fatura atual</Text>
+                            <Text style={{fontSize: 20, color: 'black', fontWeight: 'bold', marginTop: 3}}>R$ 306,95</Text>
+                            <Text style={{fontSize: 14, color: 'black', marginTop: 9}}>Limite disponível de R$ 753,84</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.linha}></View>
+
+                    <View style={styles.credito}>
+                        <View style={styles.cartao}>
+                            <Text style={{fontSize: 20, color: 'black', fontWeight: 'bold'}}>Empréstimo</Text>
+                            <Image 
+                                style={styles.seta}
+                                source={require('../imgs/proximo.png')}
+                            />
+                        </View>
+                        <Text style={{fontSize: 16, color: 'black', marginTop: 7}}>
+                            Dinheiro parado no FGTS? Você pode antecipar até 12 parcelas do seu saque aniversário.
+                        </Text>
+                    </View>
+
+                </View>
+            </ScrollView>
+
+
         </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFF',
-        height: '100%'
-    },
-    header: {
-        width: '100%',
-        height: '30%',
-        backgroundColor: '#8A05BE'
-    },
-    header_img_user:{
-        width: 35,
-        height: 35,
-        alignContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    header_img_user_backg: {
-        width: 55,
-        height: 55,
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        borderRadius: 50,
-        alignContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    header_img_opcoes: {
-        width: 30,
-        height: 30
-    },
-    header_nome: {
-        color: '#FFF',
-        fontSize: 20,
-        paddingLeft: 20
-    },
-    item: {
-        backgroundColor: '#f1eff4',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 15,
-        borderRadius: 50
-    },
-    image: {
-        width: 25,  // Defina o tamanho da imagem
-        height: 25,
-    },
-    title: {
-        fontSize: 17,
-        textAlign: 'center',
-        fontWeight: 'bold'
-    },
-    container2: {
-        flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
-    },
-    cartoes: {
-        flexDirection: 'row',
-        backgroundColor: '#f1eff4',
-        margin: 20,
-        borderRadius: 10,
-        padding: 13
-    },
-    cartoes_img: {
-        width: 40,
-        height: 40,
-        marginRight: 20
-    },
-    cartoes_text: {
-        fontSize: 17,
-        alignSelf: 'center',
-        fontWeight: 'bold',
-        color: 'black'
-    },
-    cards: {
-        width: 250,
-        height: 70,
-        backgroundColor: '#f1eff4',
-        padding: 12,
-        marginVertical: 8,
-        marginHorizontal: 15,
-        borderRadius: 12
-    },
-    cards_text: {
-        fontSize: 15,
-        color: 'black'
-    }
-})
 
 export default Home;
